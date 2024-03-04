@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blood Cells Count</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='content.css')}}" />
+    <link rel="stylesheet" href="{{url_for('static', filename='active.css')}}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <div class="header">
+        <h1>Blood Cells Counter</h1>
+    </div>
+
+    <div class="head">
+        <form action="/" method="post" enctype="multipart/form-data" class="form">
+            <label for="fileInput" class="custom-file-input">
+                Choose a Blood Smear Image
+                <input type="file" id="fileInput" name="file" accept="image/*" required class="fileinput">
+            </label>
+            <button type="submit" class="btn">Upload</button>
+        </form>
+        {%if uploadImageValid %}
+        <div class="selecthead">
+            <h1 class="active" id="rbc">RBC</h1>
+            <h1 id="wbc">WBC</h1>
+        </div>
+    </div>
+    <div class="content">
+        <div class="wbc">
+            {% if wbcCount %}
+            <div class="wbcCount notActiveCell" id="wbcCount">
+                <h1>Possible No.of WBCs : {{wbcCount}}</h1>
+                <img src="{{url_for('static', filename=wbcCountPath)}}" alt="wbc Count" height="200" width="200" />
+            </div>
+            <div class="wbcCount" id="rbcCount">
+                <h1>Possible No.of RBCs : {{countrbc}}</h1>
+                <img src="{{url_for('static', filename=countRbcPath)}}" alt="rbc Count" height="200" width="200" />
+            </div>
+            {% endif %}
+
+            <div class="notActiveCell" id="wbcContent">
+                <div class="label">WBC Content</div>
+                <div class="wbcContent">
+
+                    <div class="original">
+                        {% if image_normal_path %}
+
+                        <div class="originalImage">
+                            <h4>Original Image</h4>
+                            <img src="{{ url_for('static', filename=image_normal_path) }}" alt="blood image"
+                                height="200" width="200" />
+                        </div>
+
+                        {% endif %} {% if kmeans_seg_path %}
+
+                        <div class="kmeans_seg">
+                            <h4>K-Means Segmented Image</h4>
+                            <img src="{{ url_for('static', filename=kmeans_seg_path) }}" alt="Kmeans image" height="200"
+                                width="200" />
+                        </div>
+
+                        {% endif %} {% if image_gray_path %}
+
+                        <div class="image_gray">
+                            <h4>GrayScaled Image</h4>
+                            <img src="{{ url_for('static', filename=image_gray_path) }}" alt="Kmeans image" height="200"
+                                width="200" />
+                        </div>
+                    </div>
+
+                    {% endif %}
+
+                    <div class="wbcsThresholds">
+                        {%if global_thresholding %}
+                        <div class="item">
+                            <h4>Global Threshold Image (v=127)</h4>
+                            <img src="{{url_for('static', filename=global_thresholding)}}" alt="global Threshold"
+                                height="200" width="200" />
+                        </div>
+                        {% endif %}
+                        {%if adaptive_mean_thresholding %}
+                        <div class="item">
+                            <h4>Adaptive Mean Threshold Image</h4>
+                            <img src="{{url_for('static', filename=adaptive_mean_thresholding)}}"
+                                alt="adaptive mean Threshold" height="200" width="200" />
+                        </div>
+                        {% endif %}
+                        {%if adaptive_gausian_thresholding %}
+                        <div class="item">
+                            <h4>Adaptive Gaussian Threshold Image</h4>
+                            <img src="{{url_for('static', filename=adaptive_gausian_thresholding)}}"
+                                alt="adaptive gaussian Threshold" height="200" width="200" />
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <div class="normalThresholds">
+                        <div class="item">
+                            {%if normal_threshold %}
+                            <h4>Original Image Threshold</h4>
+                            <img src="{{url_for('static', filename=normal_threshold)}}" alt="normal_threshold"
+                                height="200" width="200" />
+
+                            {% endif %}
+                        </div>
+                        <div class="item">
+                            {%if normal_global %}
+                            <h4>Original Image Global Threshold (V=127)</h4>
+                            <img src="{{url_for('static', filename=normal_global)}}" alt="normal_global Threshold"
+                                height="200" width="200" />
+                            {% endif %}
+                        </div>
+                        <div class="item">
+                            {%if adaptive_mean %}
+                            <h4>Adaptive Mean Threshold Image</h4>
+                            <img src="{{url_for('static', filename=adaptive_mean)}}" alt="adaptive mean Threshold"
+                                height="200" width="200" />
+                            {% endif %}
+                        </div>
+                        <div class="item">{%if adaptive_gaussian %}
+                            <h4>Adaptive Gaussian Threshold Image</h4>
+                            <img src="{{url_for('static', filename=adaptive_gaussian)}}"
+                                alt="adaptive gaussian Threshold" height="200" width="200" />
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if houghsCount %}
+                    <div class="houghsWbc">
+                        <h1>Cirlces Detected by Houghs Gradient : {{houghsCount}}</h1>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="activeCell" id="rbcContent">
+                <div class="label">RBC Content</div>
+                <div class="wbcContent">
+                    <div class="wbcsThresholds">
+                        {%if rbc_global_thresholding %}
+                        <div class="item">
+                            <h4>Global Threshold Image (v=127)</h4>
+                            <img src="{{url_for('static', filename=rbc_global_thresholding)}}" alt="global Threshold"
+                                height="200" width="200" />
+                        </div>
+                        {% endif %}
+                        {%if rbc_adaptive_mean_thresholding %}
+                        <div class="item">
+                            <h4>Adaptive Mean Threshold Image</h4>
+                            <img src="{{url_for('static', filename=rbc_adaptive_mean_thresholding)}}"
+                                alt="adaptive mean Threshold" height="200" width="200" />
+                        </div>
+                        {% endif %}
+                        {%if rbc_adaptive_gausian_thresholding %}
+                        <div class="item">
+                            <h4>Adaptive Gaussian Threshold Image</h4>
+                            <img src="{{url_for('static', filename=rbc_adaptive_gausian_thresholding)}}"
+                                alt="adaptive gaussian Threshold" height="200" width="200" />
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {%else%}
+    <div class="imageError">The uploaded image may not be a blood smear.</div>
+    {%endif%}
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+</body>
+
+</html>

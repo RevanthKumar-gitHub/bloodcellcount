@@ -1,0 +1,117 @@
+.content
+{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+.wbc
+{
+    /* background-color: red; */
+    padding: 10px;
+    margin-top: 10px;
+    width: 100vw;
+    font-family: "Kanit", sans-serif;
+    /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+}
+
+.wbcCount
+{
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+img
+{
+    box-shadow: black 0px 0px 10px 1px;
+    height: 250px;
+    width: 250px;
+    margin-top: 2px;
+}
+.wbcCount h1
+{
+    background-color: #002c83;
+    font-weight: 400;
+    color: white;
+    border-radius: 10px;
+    padding: 2px 10px;
+}
+
+.wbcContent
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #99b5ec;
+    margin-top: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.label
+{
+    margin-top: 10px;
+    text-align: center;
+    background-color: #002c83;
+    font-weight: 400;
+    color: white;
+    border-radius: 10px;
+    padding: 2px 10px;
+}
+
+.wbcsThresholds
+{
+    display: grid;
+    grid-template-columns: repeat(3,1fr); 
+    gap: 20px;
+    width: max-content;
+    background-color: #002c83;
+    max-width: fit-content;
+    padding: 20px 30px;
+    margin-top: 10px;
+    border-radius: 20px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.normalThresholds
+{
+    display: grid;
+    grid-template-columns: repeat(4,1fr); 
+    gap: 20px;
+    width: max-content;
+    background-color: #002c83;
+    max-width: fit-content;
+    padding: 20px 30px;
+    margin-top: 10px;
+    border-radius: 20px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.original
+{
+    display: grid;
+    grid-template-columns: repeat(3,1fr); 
+    gap: 40px;
+    width: max-content;
+    background-color: #002c83;
+    max-width: fit-content;
+    padding: 20px 30px;
+    margin-top: 10px;
+    border-radius: 20px;
+    color: white;
+}
+
+h4
+{
+    font-weight: 300;
+    text-align: center;
+    font-size: 1em;
+}
+
